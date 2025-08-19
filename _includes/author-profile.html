@@ -45,6 +45,10 @@
         </li>
       {% endif %}
 
+      {% if author.ads_profile %}
+        <li><a href="{{ author.ads_profile }}"><i class="ai ai-ads ai-fw icon-pad-right"></i>ADS</a></li>
+      {% endif %}
+
       <!-- Font Awesome and Academicons icons / Academic websites -->
       {% if author.academia %}
         <li><a href="{{ author.academia }}"><i class="ai ai-academia ai-fw icon-pad-right" aria-hidden="true"></i>Academia</a></li>
