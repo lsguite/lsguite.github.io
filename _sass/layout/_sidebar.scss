@@ -129,12 +129,12 @@
 }
 .sidebar .author__name {
   font-family: $sans-serif;
-  font-size: 0.5em; /* $type-size-6; */
+  font-size: 1.3em !important; /* $type-size-6; */
 }
 
 /* Increase bio/caption font size */
 .sidebar .author__bio {
-    font-size: 1.1em;
+    font-size: 1.1em !important;
 }
 
 .sidebar .author__desktop {
