@@ -1,6 +1,6 @@
 ---
 title: "**Avalanching Together: A Model For Sympathetic Flaring**"
-permalink: /publication/sympathetic_avalanches
+permalink: /publication/2025-06-sympathetic_avalanches
 category: manuscripts
 collection: publications
 ---
