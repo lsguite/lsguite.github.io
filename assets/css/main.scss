@@ -41,3 +41,25 @@
     "vendor/font-awesome/solid",
     "vendor/font-awesome/brands"
 ;
+
+/* Profile page customization */
+
+/* Increase profile name font size */
+.author-profile h2 {
+    font-size: 2.5em;       /* adjust as needed */
+    margin-bottom: 0.3em;   /* optional spacing */
+}
+
+/* Increase caption font size */
+.author-profile .author-caption {
+    font-size: 1.3em;       /* adjust as needed */
+    color: #555;            /* optional: change text color */
+    margin-bottom: 1em;     /* spacing below caption */
+}
+
+/* Adjust social icons to align with text */
+.author-profile ul.social-icons li img,
+.author-profile ul.social-icons li i {
+    height: 1em;             /* matches font size of icons */
+    vertical-align: middle;  /* aligns icons with text */
+}
