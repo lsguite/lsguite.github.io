@@ -1,6 +1,6 @@
 ---
 title: "**Flaring together: A preferred angular separation between sympathetic flares on the Sun**"
-permalink: /publication/sympathetic_avalanches
+permalink: /publication/2025-02-sympathetic_flares
 category: manuscripts
 collection: publications
 ---
