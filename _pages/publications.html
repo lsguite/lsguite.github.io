@@ -5,10 +5,9 @@ permalink: /publications/
 author_profile: true
 ---
 
-{% for pub in site.publications %}
+{% assign pubs = site.publications | sort: "date" | reverse %}
+{% for pub in pubs %}
   <div class="pub">
     {{ pub.content }}
   </div>
 {% endfor %}
-
-
