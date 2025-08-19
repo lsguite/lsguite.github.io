@@ -3,6 +3,7 @@ title: "**Flaring together: A preferred angular separation between sympathetic f
 permalink: /publication/sympathetic_avalanches
 category: manuscripts
 collection: publications
+date: 2025-02
 ---
 
 ## **Flaring together: A preferred angular separation between sympathetic flares on the Sun**
