@@ -7,5 +7,5 @@ redirect_from:
   - /resume
 ---
 
-<iframe width="100%" height="800" src="/files/CV_github.pdf">
+<image width="100%" height="800" src="/files/CV_github.pdf">
 
