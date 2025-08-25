@@ -7,6 +7,7 @@ redirect_from:
   - /resume
 ---
 
+­<!--
 {% include base_path %}
 
 <div style="border:none; overflow:hidden; height:600px;">
@@ -16,3 +17,10 @@ redirect_from:
           scrolling="no">
   </iframe>
 </div>
+-->
+
+![Page 1](/files/cv1.png)
+![Page 2](/files/cv2.png)
+![Page 3](/files/cv3.png)
+![Page 4](/files/cv4.png)
+![Page 5](/files/cv5.png)
