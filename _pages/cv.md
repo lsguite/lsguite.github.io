@@ -9,5 +9,10 @@ redirect_from:
 
 {% include base_path %}
 
-<iframe src="/files/CV_github.pdf" width="100%" height="600px">
-</iframe>
+<div style="border:none; overflow:hidden; height:600px;">
+  <iframe src="/files/CV_github.pdf"
+          style="border:none; width:100%; height:600px; display:block;"
+          frameborder="0"
+          scrolling="no">
+  </iframe>
+</div>
