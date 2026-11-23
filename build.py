@@ -48,13 +48,13 @@ def pubs(items):
         fig, body = p.get("figure") or {}, "".join(f"<p>{e(x)}</p>" for x in p.get("summary", "").split("\n\n") if x.strip())
         if fig.get("src") and os.path.exists(fig["src"]):
             body += f'<figure><img loading="lazy" src="{e(fig["src"])}" alt="{e(fig.get("alt",""))}"><figcaption>{e(fig.get("caption",""))}</figcaption></figure>'
-        lk = ([{"label": "DOI", "url": f"https://doi.org/{doi}"}] if doi else []) + p.get("links", [])
+        lk = p.get("links", [])
         out += (f'<article class="entry pub" itemscope itemtype="https://schema.org/ScholarlyArticle">'
                 f'<h3><span class="num">[{n}]</span> <span itemprop="name">{t}</span></h3><p class="auth">{auth}</p>'
                 f'<p><em>{e(p.get("venue",""))}</em>, {p["year"]}</p><meta itemprop="datePublished" content="{p["year"]}">'
                 + (f'<ul class="badges">{badges}</ul>' if badges else "")
                 + (f'<details><summary>Summary</summary><div class="abs">{body}</div></details>' if body else "")
-                + f'<p class="links">{links(lk)}</p></article>')
+                + (f'<p class="links">{links(lk)}</p>' if lk else "") + '</article>')
     return out + "</section>" if items else ""
 
 # Home
