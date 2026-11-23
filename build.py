@@ -46,18 +46,18 @@ person = json.dumps({"@context": "https://schema.org", "@type": "Person", "name"
                      "email": S["email"], "sameAs": [l["url"] for l in S["links"]]})
 page("index.html", "Home", S["description"], f'''<section class="hero"><div><h1>{e(S["name"])}</h1><p class="role">{e(S["role"])}</p>
 <p>{e(S["intro"])}</p><p class="links">{links(S["links"])}</p></div>{stage}</section>
-<section><h2>Figures from my research</h2><div class="figs">{figs}</div></section>
+{'<section><h2>Figures from my research</h2><div class="figs">' + figs + '</div></section>' if figs else ''}
 {'<script src="anim.js" defer></script>' if not media else ''}''', f'<script type="application/ld+json">{person}</script>')
 
 page("publications.html", "Publications", f'Peer-reviewed papers and preprints by {S["name"]}.',
-     '<h1 class="page-title">Publications</h1>' + by_year(D["publications"], "ScholarlyArticle"))
+     '<h1 class="page-title">Publications</h1>' + (by_year(D["publications"], "ScholarlyArticle") or "<p>Coming soon.</p>"))
 page("posters.html", "Posters", f'Conference posters by {S["name"]}.',
-     '<h1 class="page-title">Posters</h1>' + by_year(D["posters"], "CreativeWork"))
+     '<h1 class="page-title">Posters</h1>' + (by_year(D["posters"], "CreativeWork") or "<p>Coming soon.</p>"))
 cv = "".join(f'<section class="year"><h2>{e(s["title"])}</h2><div>' + "".join(
     f'<article class="entry"><span class="when">{e(i["when"])}</span><h3>{e(i["what"])}</h3><p>{e(i["where"])}</p></article>'
     for i in s["items"]) + "</div></section>" for s in D["cv"])
 page("cv.html", "CV", f'Curriculum vitae of {S["name"]}: education, experience and awards.',
-     f'<h1 class="page-title">CV</h1><a class="btn" href="{e(S["cv_pdf"])}">Download CV (PDF)</a>' + cv)
+     f'<h1 class="page-title">CV</h1>' + (f'<a class="btn" href="{e(S["cv_pdf"])}">Download CV (PDF)</a>' if os.path.exists(S["cv_pdf"]) else "") + (cv or "<p>Coming soon.</p>"))
 
 open("sitemap.xml", "w").write('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' +
     "".join(f'<url><loc>{URL}{"/" if f=="index.html" else "/"+f}</loc><lastmod>{date.today()}</lastmod></url>' for _, f in PAGES) + "</urlset>")
