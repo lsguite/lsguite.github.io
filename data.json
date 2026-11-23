@@ -1,0 +1,37 @@
+{
+  "site": {
+    "name": "Your Name",
+    "role": "PhD candidate, Department of X, University of Y",
+    "email": "you@university.edu",
+    "url": "https://yourusername.github.io",
+    "description": "Your Name is a PhD candidate at University of Y studying [topic]. Publications, posters and CV.",
+    "intro": "I study [your research topic]. My work asks [your main question] using [methods], with applications in [area]. Replace this paragraph with two or three sentences about you.",
+    "photo": "",
+    "hero_media": "",
+    "cv_pdf": "cv.pdf",
+    "links": [
+      {"label": "Google Scholar", "url": "https://scholar.google.com/"},
+      {"label": "ORCID", "url": "https://orcid.org/"},
+      {"label": "GitHub", "url": "https://github.com/"}
+    ]
+  },
+  "figures": [
+    {"src": "figures/fig1.png", "alt": "Describe figure 1", "caption": "Caption for the first figure."},
+    {"src": "figures/fig2.png", "alt": "Describe figure 2", "caption": "Caption for the second figure."},
+    {"src": "figures/fig3.png", "alt": "Describe figure 3", "caption": "Caption for the third figure."}
+  ],
+  "publications": [
+    {"year": 2025, "title": "A placeholder title for your most recent paper", "authors": "Your Name, Co-author A, Co-author B", "venue": "Journal of Examples, 12(3)", "links": [{"label": "PDF", "url": "papers/example.pdf"}, {"label": "DOI", "url": "https://doi.org/"}]},
+    {"year": 2024, "title": "Another paper, perhaps a preprint", "authors": "Co-author A, Your Name", "venue": "arXiv preprint", "links": [{"label": "arXiv", "url": "https://arxiv.org/"}]}
+  ],
+  "posters": [
+    {"year": 2025, "title": "Poster title", "authors": "Your Name", "venue": "Conference name, City", "links": [{"label": "PDF", "url": "posters/example.pdf"}]}
+  ],
+  "cv": [
+    {"title": "Education", "items": [
+      {"when": "2022 to present", "what": "PhD in Your Field", "where": "University of Y"},
+      {"when": "2020 to 2022", "what": "MSc in Your Field", "where": "University of Z"}]},
+    {"title": "Experience", "items": [{"when": "2024", "what": "Visiting researcher", "where": "Institute of W"}]},
+    {"title": "Awards", "items": [{"when": "2025", "what": "Best poster award", "where": "Conference name"}]}
+  ]
+}
