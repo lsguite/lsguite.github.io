@@ -1,31 +1,152 @@
 {
-  "site": {
-    "name": "Louis-Simon Guité",
-    "role": "PhD Researcher, Astrophysics Department, CEA Paris-Saclay",
-    "email": "louis-simon.guite@cea.fr",
-    "url": "https://lsguite.github.io",
-    "description": "Louis-Simon Guité is a PhD researcher in astrophysics at CEA Paris-Saclay. Publications, posters and CV.",
-    "intro": "Short introduction coming soon.",
-    "photo": "",
-    "hero_media": "",
-    "cv_pdf": "cv.pdf",
-    "links": [
-      {
-        "label": "Google Scholar",
-        "url": "https://scholar.google.fr/citations?hl=en&user=g5AcX6gAAAAJ&view_op=list_works&sortby=pubdate"
-      },
-      {
-        "label": "ORCID",
-        "url": "https://orcid.org/0000-0002-8323-7809"
-      },
-      {
-        "label": "GitHub",
-        "url": "https://github.com/lsguite"
-      }
-    ]
+ "site": {
+  "name": "Louis-Simon Guité",
+  "role": "PhD Researcher, Astrophysics Department, CEA Paris-Saclay",
+  "email": "louis-simon.guite@cea.fr",
+  "url": "https://lsguite.github.io",
+  "description": "Louis-Simon Guité is a PhD researcher in astrophysics at CEA Paris-Saclay. Publications, posters and CV.",
+  "intro": "Short introduction coming soon.",
+  "photo": "",
+  "hero_media": "",
+  "cv_pdf": "cv.pdf",
+  "links": [
+   {
+    "label": "Google Scholar",
+    "url": "https://scholar.google.fr/citations?hl=en&user=g5AcX6gAAAAJ&view_op=list_works&sortby=pubdate"
+   },
+   {
+    "label": "ORCID",
+    "url": "https://orcid.org/0000-0002-8323-7809"
+   },
+   {
+    "label": "GitHub",
+    "url": "https://github.com/lsguite"
+   }
+  ],
+  "me": [
+   "L-S. Guité",
+   "L.-S. Guité",
+   "L. Guité"
+  ]
+ },
+ "figures": [],
+ "publications": [
+  {
+   "category": "First author",
+   "year": 2026,
+   "title": "Sungrazing comets as analogs of star-planet magnetic interactions",
+   "authors": "L-S. Guité, A. Strugarek, A.J. Finley, S. Parenti, V. Réville, A. Paul, A.S. Brun, J. de Carpentier",
+   "venue": "Astronomy & Astrophysics",
+   "doi": "10.1051/0004-6361/202659975",
+   "highlights": [],
+   "links": [],
+   "summary": "",
+   "figure": {
+    "src": "",
+    "alt": "",
+    "caption": ""
+   }
   },
-  "figures": [],
-  "publications": [],
-  "posters": [],
-  "cv": []
+  {
+   "category": "First author",
+   "year": 2025,
+   "title": "Avalanching Together: A Model for Sympathetic Flaring",
+   "authors": "L-S. Guité, P. Charbonneau, A. Strugarek",
+   "venue": "Solar Physics",
+   "doi": "10.1007/s11207-025-02501-4",
+   "highlights": [],
+   "links": [],
+   "summary": "",
+   "figure": {
+    "src": "",
+    "alt": "",
+    "caption": ""
+   }
+  },
+  {
+   "category": "First author",
+   "year": 2025,
+   "title": "Flaring together: A preferred angular separation between sympathetic flares on the Sun",
+   "authors": "L-S. Guité, A. Strugarek, P. Charbonneau",
+   "venue": "Astronomy & Astrophysics",
+   "doi": "10.1051/0004-6361/202452381",
+   "highlights": [
+    "Featured Image, Astronomy & Astrophysics Vol. 694 (February 2025)",
+    "Astronomy & Astrophysics Research Highlight"
+   ],
+   "links": [],
+   "summary": "",
+   "figure": {
+    "src": "",
+    "alt": "",
+    "caption": ""
+   }
+  },
+  {
+   "category": "Co-author with significant contributions",
+   "year": 2026,
+   "title": "An automated method for planetary nebula detection with SIGNALS: first applications to NGC 4214 and NGC 4449",
+   "authors": "N. Yang, J. Hartke, M. Bureau, C. Spiniello, L.-S. Guité, et al.",
+   "venue": "Monthly Notices of the Royal Astronomical Society",
+   "doi": "10.1093/mnras/stag661",
+   "highlights": [],
+   "links": [],
+   "summary": "",
+   "figure": {
+    "src": "",
+    "alt": "",
+    "caption": ""
+   }
+  },
+  {
+   "category": "Co-author with significant contributions",
+   "year": 2023,
+   "title": "Extended radio emission in the galaxy cluster MS 0735.6+7421 detected with the Karl G. Jansky Very Large Array",
+   "authors": "T. Bégin, J. Hlavacek-Larrondo, C.L. Rhea, M. Gendron-Marsolais, B. McNamara, L. Guité, et al.",
+   "venue": "Monthly Notices of the Royal Astronomical Society",
+   "doi": "10.1093/mnras/stac3526",
+   "highlights": [],
+   "links": [],
+   "summary": "",
+   "figure": {
+    "src": "",
+    "alt": "",
+    "caption": ""
+   }
+  },
+  {
+   "category": "Co-author with significant contributions",
+   "year": 2022,
+   "title": "The First High-Contrast Images of X-Ray Binaries: Detection of Candidate Companions in the γCas Analog RX J1744.7-2713",
+   "authors": "M. Prasow-Émond, J. Hlavacek-Larrondo, K. Fogarty, J. Rameau, D. Mawet, L.-S. Guité, et al.",
+   "venue": "The Astronomical Journal",
+   "doi": "10.3847/1538-3881/ac6d57",
+   "highlights": [],
+   "links": [],
+   "summary": "",
+   "figure": {
+    "src": "",
+    "alt": "",
+    "caption": ""
+   }
+  },
+  {
+   "category": "Co-author with minor contributions",
+   "year": 2021,
+   "title": "LUCI: A Python package for SITELLE spectral analysis",
+   "authors": "C.L. Rhea, J. Hlavacek-Larrondo, L. Rousseau-Nepton, B. Vigneron, L-S. Guité",
+   "venue": "Research Notes of the AAS",
+   "doi": "10.3847/2515-5172/ac2517",
+   "highlights": [],
+   "links": [],
+   "summary": "",
+   "figure": {
+    "src": "",
+    "alt": "",
+    "caption": ""
+   }
+  }
+ ],
+ "posters": [],
+ "cv": []
 }

@@ -34,6 +34,29 @@ def by_year(items, kind):
         out += "</section>"
     return out
 
+def pubs(items):
+    out, cat = "", None
+    for n, p in enumerate(items, 1):
+        c = p.get("category", "")
+        if n == 1 or c != cat:
+            out += ("</section>" if n > 1 else "") + '<section class="cat">' + (f"<h2>{e(c)}</h2>" if c else ""); cat = c
+        doi = p.get("doi", ""); href = p.get("url") or (f"https://doi.org/{doi}" if doi else "")
+        t = e(p["title"]); t = f'<a href="{e(href)}">{t}</a>' if href else t
+        auth = e(p.get("authors", ""))
+        for me in S.get("me", []): auth = auth.replace(e(me), f"<strong>{e(me)}</strong>")
+        badges = "".join(f"<li>{e(h)}</li>" for h in p.get("highlights", []))
+        fig, body = p.get("figure") or {}, "".join(f"<p>{e(x)}</p>" for x in p.get("summary", "").split("\n\n") if x.strip())
+        if fig.get("src") and os.path.exists(fig["src"]):
+            body += f'<figure><img loading="lazy" src="{e(fig["src"])}" alt="{e(fig.get("alt",""))}"><figcaption>{e(fig.get("caption",""))}</figcaption></figure>'
+        lk = ([{"label": "DOI", "url": f"https://doi.org/{doi}"}] if doi else []) + p.get("links", [])
+        out += (f'<article class="entry pub" itemscope itemtype="https://schema.org/ScholarlyArticle">'
+                f'<h3><span class="num">[{n}]</span> <span itemprop="name">{t}</span></h3><p class="auth">{auth}</p>'
+                f'<p><em>{e(p.get("venue",""))}</em>, {p["year"]}</p><meta itemprop="datePublished" content="{p["year"]}">'
+                + (f'<ul class="badges">{badges}</ul>' if badges else "")
+                + (f'<details><summary>Summary</summary><div class="abs">{body}</div></details>' if body else "")
+                + f'<p class="links">{links(lk)}</p></article>')
+    return out + "</section>" if items else ""
+
 # Home
 media = S["hero_media"]
 if media.endswith((".mp4", ".webm")): stage = f'<div class="stage"><video src="{e(media)}" autoplay loop muted playsinline></video></div>'
@@ -50,7 +73,7 @@ page("index.html", "Home", S["description"], f'''<section class="hero"><div><h1>
 {'<script src="anim.js" defer></script>' if not media else ''}''', f'<script type="application/ld+json">{person}</script>')
 
 page("publications.html", "Publications", f'Peer-reviewed papers and preprints by {S["name"]}.',
-     '<h1 class="page-title">Publications</h1>' + (by_year(D["publications"], "ScholarlyArticle") or "<p>Coming soon.</p>"))
+     '<h1 class="page-title">Publications</h1>' + (pubs(D["publications"]) or "<p>Coming soon.</p>"))
 page("posters.html", "Posters", f'Conference posters by {S["name"]}.',
      '<h1 class="page-title">Posters</h1>' + (by_year(D["posters"], "CreativeWork") or "<p>Coming soon.</p>"))
 cv = "".join(f'<section class="year"><h2>{e(s["title"])}</h2><div>' + "".join(
