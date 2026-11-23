@@ -59,7 +59,6 @@ footer#foot{max-width:1080px;margin:0 auto;padding:1.5rem;border-top:1px solid v
 details{margin:0 0 .5rem}
 summary{cursor:pointer;color:var(--accent);min-height:32px;display:flex;align-items:center;font-weight:600}
 .abs{padding:.25rem 0 .75rem}.abs p{color:var(--ink)}.abs img{max-width:100%;border-radius:8px;display:block}
-
 summary{list-style:none}
 summary::-webkit-details-marker{display:none}
 summary::before{content:"";width:.45rem;height:.45rem;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(-45deg);margin-right:.75rem;transition:transform .15s}
