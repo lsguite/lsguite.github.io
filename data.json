@@ -1,8 +1,8 @@
 {
   "site": {
-    "name": "Your Name",
-    "role": "PhD candidate, Department of X, University of Y",
-    "email": "you@university.edu",
+    "name": "Louis-Simon Guité",
+    "role": "PhD researcher, Department of Astrophysucs, CEA Paris-Saclay",
+    "email": "louis-simon.guite@cea.fr",
     "url": "https://yourusername.github.io",
     "description": "Your Name is a PhD candidate at University of Y studying [topic]. Publications, posters and CV.",
     "intro": "I study [your research topic]. My work asks [your main question] using [methods], with applications in [area]. Replace this paragraph with two or three sentences about you.",
@@ -10,9 +10,9 @@
     "hero_media": "",
     "cv_pdf": "cv.pdf",
     "links": [
-      {"label": "Google Scholar", "url": "https://scholar.google.com/"},
-      {"label": "ORCID", "url": "https://orcid.org/"},
-      {"label": "GitHub", "url": "https://github.com/"}
+      {"label": "Google Scholar", "url": "https://scholar.google.fr/citations?hl=fr&user=g5AcX6gAAAAJ&view_op=list_works&sortby=pubdate/"},
+      {"label": "ORCID", "url": "https://orcid.org/0000-0002-8323-7809/"},
+      {"label": "GitHub", "url": "https://github.com/lsguite/"}
     ]
   },
   "figures": [
