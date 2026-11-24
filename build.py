@@ -76,7 +76,7 @@ def posters(items):
                 f'<h3 itemprop="name">{t}</h3><p class="auth">{auth}</p><p><em>{e(p.get("event",""))}</em>, {e(p.get("date",""))}</p>'
                 f'<meta itemprop="datePublished" content="{yr}">'
                 + (f'<ul class="badges"><li>{e(p["note"])}</li></ul>' if p.get("note") else "") + "</div></article>")
-    return out
+    return f'<div class="poster-grid">{out}</div>' if out else ""
 
 # Home
 media = S["hero_media"]
