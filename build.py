@@ -3,7 +3,7 @@ import json, os, html
 from datetime import date
 D = json.load(open("data.json", encoding="utf-8")); S = D["site"]
 e = html.escape; URL = S["url"].rstrip("/")
-PAGES = [("Home", "index.html"), ("Publications", "publications.html"), ("Posters", "posters.html"), ("CV", "cv.html")]
+PAGES = [("Home", "index.html"), ("Publications", "publications.html"), ("Posters", "posters.html"), ("CV", "cv.html"), ("Astrophotography", "astrophotography.html")]
 links = lambda ls: "".join(f'<a href="{e(l["url"])}">{e(l["label"])}</a>' for l in ls)
 
 def page(file, title, desc, body, extra=""):
@@ -78,6 +78,17 @@ def posters(items):
                 + (f'<ul class="badges"><li>{e(p["note"])}</li></ul>' if p.get("note") else "") + "</div></article>")
     return f'<div class="poster-grid">{out}</div>' if out else ""
 
+def photos(items):
+    out = ""
+    for p in items:
+        s = p.get("src", "").lstrip("/")
+        if not s or not os.path.exists(s): continue
+        det = f"<span>{e(p['details'])}</span>" if p.get("details") else ""
+        out += (f'<figure class="photo" itemscope itemtype="https://schema.org/ImageObject"><a href="{e(s)}">'
+                f'<img loading="lazy" itemprop="contentUrl" src="{e(s)}" alt="{e(p.get("alt") or p.get("title", ""))}"></a>'
+                f'<figcaption><strong itemprop="name">{e(p.get("title", ""))}</strong>{det}</figcaption></figure>')
+    return f'<div class="gallery">{out}</div>' if out else ""
+
 # Home
 media = S["hero_media"]
 if media.endswith((".mp4", ".webm")): stage = f'<div class="stage"><video src="{e(media)}" autoplay loop muted playsinline></video></div>'
@@ -102,6 +113,9 @@ cv = "".join(f'<section class="year"><h2>{e(s["title"])}</h2><div>' + "".join(
     for i in s["items"]) + "</div></section>" for s in D["cv"])
 page("cv.html", "CV", f'Curriculum vitae of {S["name"]}: education, experience and awards.',
      f'<h1 class="page-title">CV</h1>' + (f'<a class="btn" href="{e(S["cv_pdf"])}">Download CV (PDF)</a>' if os.path.exists(S["cv_pdf"]) else "") + (cv or "<p>Coming soon.</p>"))
+
+page("astrophotography.html", "Astrophotography", f'Astrophotography by {S["name"]}.',
+     '<h1 class="page-title">Astrophotography</h1>' + (photos(D.get("photos", [])) or "<p>Coming soon.</p>"))
 
 open("sitemap.xml", "w").write('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' +
     "".join(f'<url><loc>{URL}{"/" if f=="index.html" else "/"+f}</loc><lastmod>{date.today()}</lastmod></url>' for _, f in PAGES) + "</urlset>")
