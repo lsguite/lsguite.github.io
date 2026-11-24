@@ -56,7 +56,7 @@
    "doi": "10.1007/s11207-025-02501-4",
    "highlights": [],
    "links": [],
-   "summary": "To be added",
+   "summary": "We modeled sympathetic solar flares using a coupled two-lattice self-organized critical avalanche framework to represent interacting active regions, finding that stronger coupling increases short waiting times and energy synchronization. Comparing the model's waiting-time statistics with solar observations indicates that any magnetic coupling driving sympathetic flares between active regions is likely relatively weak.",
    "figure": {
     "src": "figures/connected_lattice.png",
     "alt": "To be added",
@@ -71,7 +71,7 @@
    "venue": "Astronomy & Astrophysics",
    "doi": "10.1051/0004-6361/202452381",
    "links": [],
-   "summary": "To be added",
+   "summary": "Analyzing large flare catalogs from SDO/AIA, RHESSI, and Solar Orbiter/STIX across solar cycles 24 and 25, we found strong statistical evidence for sympathetic solar flares, occurring at roughly a 5% rate, with an excess of same-hemisphere pairs separated by ~30° in longitude within 1.5 hours, alongside a deficit of certain transequatorial pairs ("unsympathetic" flares?). Magnetic extrapolations of field-line footpoint separations help explain this characteristic angular scale.",
    "figure": {
     "src": "figures/SDO131_PFSS.png",
     "alt": "To be added",
