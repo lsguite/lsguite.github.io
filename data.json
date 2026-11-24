@@ -24,6 +24,7 @@
    }
   ],
   "me": [
+   "Louis-Simon Guité",
    "L-S. Guité",
    "L.-S. Guité",
    "L. Guité"
@@ -143,6 +144,16 @@
    }
   }
  ],
- "posters": [],
+ "posters": [
+  {"title": "Magnetic interactions around cool stars: grazing comets and hotspot formation",
+   "authors": "Louis-Simon Guité, A. Strugarek, A.J. Finley, S. Parenti, V. Réville, A. Paul, A.S. Brun, J. de Carpentier, B. Gudiksen, Q. Noraz",
+   "event": "CoolStars23, Tokyo (Japan)", "date": "June 2026",
+   "pdf": "posters/poster_coolstars_LSG.pdf",
+   "note": "Honorary mention, early career researcher poster award"},
+  {"title": "Flaring together: A preferred angular separation between sympathetic solar flares",
+   "authors": "Louis-Simon Guité, A. Strugarek, P. Charbonneau",
+   "event": "European Space Weather Week, Umeå (Sweden)", "date": "October 2025",
+   "pdf": "posters/poster_ESWW_LSG2.pdf", "note": ""}
+],
  "cv": []
 }
