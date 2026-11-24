@@ -1,10 +1,13 @@
 """Run `python3 build.py` after editing data.json. Writes static HTML, sitemap.xml, robots.txt."""
-import json, os, html
+import json, os, html, re
 from datetime import date
 D = json.load(open("data.json", encoding="utf-8")); S = D["site"]
 e = html.escape; URL = S["url"].rstrip("/")
 PAGES = [("Home", "index.html"), ("Publications", "publications.html"), ("Posters", "posters.html"), ("CV", "cv.html"), ("Astrophotography", "astrophotography.html")]
 links = lambda ls: "".join(f'<a href="{e(l["url"])}">{e(l["label"])}</a>' for l in ls)
+
+def rich(t):   # **word** -> bold + accent colour
+    return re.sub(r"\*\*(.+?)\*\*", r'<strong style="color:var(--accent)">\1</strong>', e(t))
 
 def page(file, title, desc, body, extra=""):
     path = "/" if file == "index.html" else "/" + file
@@ -45,7 +48,7 @@ def pubs(items):
         auth = e(p.get("authors", ""))
         for me in S.get("me", []): auth = auth.replace(e(me), f"<strong>{e(me)}</strong>")
         badges = "".join(f"<li>{e(h)}</li>" for h in p.get("highlights", []))
-        fig, body = p.get("figure") or {}, "".join(f"<p>{e(x)}</p>" for x in p.get("summary", "").split("\n\n") if x.strip())
+        fig, body = p.get("figure") or {}, "".join(f"<p>{rich(x)}</p>" for x in p.get("summary", "").split("\n\n") if x.strip())
         if fig.get("src") and os.path.exists(fig["src"]):
             body += f'<figure><img loading="lazy" src="{e(fig["src"])}" alt="{e(fig.get("alt",""))}"><figcaption>{e(fig.get("caption",""))}</figcaption></figure>'
         lk = p.get("links", [])
@@ -112,7 +115,7 @@ else: herojs = ""
 person = json.dumps({"@context": "https://schema.org", "@type": "Person", "name": S["name"], "jobTitle": S["role"], "url": URL + "/",
                      "email": S["email"], "sameAs": [l["url"] for l in S["links"]]})
 page("index.html", "Home", S["description"], f'''<section class="hero"><div><h1>{e(S["name"])}</h1><p class="role">{role_html}</p>
-<p>{e(S["intro"])}</p><p class="links">{links(S["links"])}</p></div>{stage}</section>
+<p>{rich(S["intro"])}</p><p class="links">{links(S["links"])}</p></div>{stage}</section>
 {'<section><h2>Figures from my research</h2><div class="figs">' + figs + '</div></section>' if figs else ''}
 {herojs}''', f'<script type="application/ld+json">{person}</script>')
 
