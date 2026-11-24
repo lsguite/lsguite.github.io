@@ -13,6 +13,9 @@ def page(file, title, desc, body, extra=""):
     path = "/" if file == "index.html" else "/" + file
     full = S["name"] if file == "index.html" else f'{title} | {S["name"]}'
     nav = "".join(f'<a class="tag" href="{f}"{" aria-current=\"page\"" if f == file else ""}>{l}</a>' for l, f in PAGES)
+    home = file == "index.html"   # on the home page the big name replaces the small one in the header
+    brand = "" if home else f'<a class="brand" href="index.html">{e(S["name"])}</a>'
+    navstyle = ' style="margin-left:auto"' if home else ""
     open(file, "w", encoding="utf-8").write(f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{e(full)}</title><meta name="description" content="{e(desc)}"><meta name="author" content="{e(S["name"])}">
@@ -21,7 +24,7 @@ def page(file, title, desc, body, extra=""):
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600&family=Newsreader:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">{extra}</head>
-<body><header id="nav"><a class="brand" href="index.html">{e(S["name"])}</a><nav aria-label="Main">{nav}</nav></header>
+<body><header id="nav">{brand}<nav aria-label="Main"{navstyle}>{nav}</nav></header>
 <main>{body}</main>
 <footer id="foot"><span>&copy; {date.today().year} {e(S["name"])}</span><a href="mailto:{e(S["email"])}">{e(S["email"])}</a></footer>
 </body></html>''')
