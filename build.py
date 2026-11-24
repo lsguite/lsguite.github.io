@@ -57,6 +57,27 @@ def pubs(items):
                 + (f'<p class="links">{links(lk)}</p>' if lk else "") + '</article>')
     return out + "</section>" if items else ""
 
+import re, subprocess
+def posters(items):
+    out = ""
+    os.makedirs("previews", exist_ok=True)
+    for p in items:
+        pdf = p.get("pdf", "").lstrip("/"); has = bool(pdf) and os.path.exists(pdf)
+        prev = "previews/" + os.path.splitext(os.path.basename(pdf))[0] if has else ""
+        if has and not os.path.exists(prev + ".png"):   # auto preview from page 1 (needs poppler-utils; skipped if missing)
+            try: subprocess.run(["pdftoppm", "-png", "-singlefile", "-f", "1", "-l", "1", "-scale-to-x", "600", "-scale-to-y", "-1", pdf, prev], check=True, capture_output=True)
+            except Exception: pass
+        t = e(p["title"]); t = f'<a href="{e(pdf)}">{t}</a>' if has else t
+        auth = e(p.get("authors", ""))
+        for me in S.get("me", []): auth = auth.replace(e(me), f"<strong>{e(me)}</strong>")
+        thumb = f'<a class="thumb" href="{e(pdf)}"><img loading="lazy" src="{e(prev)}.png" alt="Preview of the poster: {e(p["title"])}"></a>' if has and os.path.exists(prev + ".png") else ""
+        yr = (re.findall(r"\d{4}", p.get("date", "")) or [""])[0]
+        out += (f'<article class="poster" itemscope itemtype="https://schema.org/CreativeWork">{thumb}<div>'
+                f'<h3 itemprop="name">{t}</h3><p class="auth">{auth}</p><p><em>{e(p.get("event",""))}</em>, {e(p.get("date",""))}</p>'
+                f'<meta itemprop="datePublished" content="{yr}">'
+                + (f'<ul class="badges"><li>{e(p["note"])}</li></ul>' if p.get("note") else "") + "</div></article>")
+    return out
+
 # Home
 media = S["hero_media"]
 if media.endswith((".mp4", ".webm")): stage = f'<div class="stage"><video src="{e(media)}" autoplay loop muted playsinline></video></div>'
@@ -75,7 +96,7 @@ page("index.html", "Home", S["description"], f'''<section class="hero"><div><h1>
 page("publications.html", "Publications", f'Peer-reviewed papers and preprints by {S["name"]}.',
      '<h1 class="page-title">Publications</h1>' + (pubs(D["publications"]) or "<p>Coming soon.</p>"))
 page("posters.html", "Posters", f'Conference posters by {S["name"]}.',
-     '<h1 class="page-title">Posters</h1>' + (by_year(D["posters"], "CreativeWork") or "<p>Coming soon.</p>"))
+     '<h1 class="page-title">Posters</h1>' + (posters(D["posters"]) or "<p>Coming soon.</p>"))
 cv = "".join(f'<section class="year"><h2>{e(s["title"])}</h2><div>' + "".join(
     f'<article class="entry"><span class="when">{e(i["when"])}</span><h3>{e(i["what"])}</h3><p>{e(i["where"])}</p></article>'
     for i in s["items"]) + "</div></section>" for s in D["cv"])
