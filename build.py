@@ -90,19 +90,29 @@ def photos(items):
     return f'<div class="gallery">{out}</div>' if out else ""
 
 # Home
-media = S["hero_media"]
-if media.endswith((".mp4", ".webm")): stage = f'<div class="stage"><video src="{e(media)}" autoplay loop muted playsinline></video></div>'
-elif media: stage = f'<div class="stage"><img src="{e(media)}" alt="Illustration of my research"></div>'
+media = S.get("hero_media", "").lstrip("/")
+if media and not os.path.exists(media): media = ""   # file not uploaded yet: fall back to the animation
+poster = S.get("hero_poster", "").lstrip("/")
+if media.endswith((".mp4", ".webm")):
+    pa = f' poster="{e(poster)}"' if poster and os.path.exists(poster) else ""
+    stage = f'<div class="stage media"><video src="{e(media)}"{pa} loop muted playsinline controls preload="metadata"></video></div>'
+elif media: stage = f'<div class="stage media"><img src="{e(media)}" alt="{e(S.get("hero_alt", "Illustration of my research"))}"></div>'
 else: stage = '<div class="stage"><canvas id="stage" role="img" aria-label="Animated network of drifting points"></canvas></div>'
 figs = "".join(
     f'<figure>{"<img loading=lazy src=%s alt=%s>" % (chr(34)+e(f["src"])+chr(34), chr(34)+e(f["alt"])+chr(34)) if os.path.exists(f["src"]) else "<div class=ph>" + e(f["src"]) + "</div>"}'
     f'<figcaption>{e(f["caption"])}</figcaption></figure>' for f in D["figures"])
+delay = int(float(S.get("hero_delay", 2.5)) * 1000)   # seconds before the video starts, set "hero_delay" in data.json
+if not media: herojs = '<script src="anim.js" defer></script>'
+elif media.endswith((".mp4", ".webm")):
+    herojs = ("<script>var v=document.querySelector('.stage video');"
+              "if(v&&!matchMedia('(prefers-reduced-motion: reduce)').matches)setTimeout(function(){v.play().catch(function(){})}," + str(delay) + ");</script>")
+else: herojs = ""
 person = json.dumps({"@context": "https://schema.org", "@type": "Person", "name": S["name"], "jobTitle": S["role"], "url": URL + "/",
                      "email": S["email"], "sameAs": [l["url"] for l in S["links"]]})
 page("index.html", "Home", S["description"], f'''<section class="hero"><div><h1>{e(S["name"])}</h1><p class="role">{e(S["role"])}</p>
 <p>{e(S["intro"])}</p><p class="links">{links(S["links"])}</p></div>{stage}</section>
 {'<section><h2>Figures from my research</h2><div class="figs">' + figs + '</div></section>' if figs else ''}
-{'<script src="anim.js" defer></script>' if not media else ''}''', f'<script type="application/ld+json">{person}</script>')
+{herojs}''', f'<script type="application/ld+json">{person}</script>')
 
 page("publications.html", "Publications", f'Peer-reviewed papers and preprints by {S["name"]}.',
      '<h1 class="page-title">Publications</h1>' + (pubs(D["publications"]) or "<p>Coming soon.</p>"))
