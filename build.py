@@ -101,6 +101,8 @@ else: stage = '<div class="stage"><canvas id="stage" role="img" aria-label="Anim
 figs = "".join(
     f'<figure>{"<img loading=lazy src=%s alt=%s>" % (chr(34)+e(f["src"])+chr(34), chr(34)+e(f["alt"])+chr(34)) if os.path.exists(f["src"]) else "<div class=ph>" + e(f["src"]) + "</div>"}'
     f'<figcaption>{e(f["caption"])}</figcaption></figure>' for f in D["figures"])
+_r = S["role"].rsplit(", ", 1)   # keep the last part (the institution) on one line
+role_html = f'{e(_r[0])}, <span style="white-space:nowrap">{e(_r[1])}</span>' if len(_r) == 2 else e(S["role"])
 delay = int(float(S.get("hero_delay", 2.5)) * 1000)   # seconds before the video starts, set "hero_delay" in data.json
 if not media: herojs = '<script src="anim.js" defer></script>'
 elif media.endswith((".mp4", ".webm")):
@@ -109,7 +111,7 @@ elif media.endswith((".mp4", ".webm")):
 else: herojs = ""
 person = json.dumps({"@context": "https://schema.org", "@type": "Person", "name": S["name"], "jobTitle": S["role"], "url": URL + "/",
                      "email": S["email"], "sameAs": [l["url"] for l in S["links"]]})
-page("index.html", "Home", S["description"], f'''<section class="hero"><div><h1>{e(S["name"])}</h1><p class="role">{e(S["role"])}</p>
+page("index.html", "Home", S["description"], f'''<section class="hero"><div><h1>{e(S["name"])}</h1><p class="role">{role_html}</p>
 <p>{e(S["intro"])}</p><p class="links">{links(S["links"])}</p></div>{stage}</section>
 {'<section><h2>Figures from my research</h2><div class="figs">' + figs + '</div></section>' if figs else ''}
 {herojs}''', f'<script type="application/ld+json">{person}</script>')
