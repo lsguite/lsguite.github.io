@@ -63,3 +63,5 @@ summary{list-style:none}
 summary::-webkit-details-marker{display:none}
 summary::before{content:"";width:.45rem;height:.45rem;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(-45deg);margin-right:.75rem;transition:transform .15s}
 details[open]>summary::before{transform:rotate(45deg)}
+.abs img{width:auto;max-width:100%;height:auto;aspect-ratio:auto;object-fit:contain}
+
