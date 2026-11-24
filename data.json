@@ -155,5 +155,11 @@
    "event": "European Space Weather Week, Umeå (Sweden)", "date": "October 2025",
    "pdf": "posters/poster_ESWW_LSG2.pdf", "note": ""}
 ],
- "cv": []
+ "cv": [],
+ "photos": [
+  {"src": "photos/orion_nebula.jpg",
+   "title": "Orion Nebula (M42)",
+   "details": "To be added",
+   "alt": "Orion Nebula showing glowing red gas and bright blue stars"}
+],
 }
