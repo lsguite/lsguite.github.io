@@ -109,16 +109,35 @@ figs = "".join(
     f'<figcaption>{e(f["caption"])}</figcaption></figure>' for f in D["figures"])
 _r = S["role"].rsplit(", ", 1)   # keep the last part (the institution) on one line
 role_html = f'{e(_r[0])}, <span style="white-space:nowrap">{e(_r[1])}</span>' if len(_r) == 2 else e(S["role"])
-delay = int(float(S.get("hero_delay", 2.5)) * 1000)   # seconds before the video starts, set "hero_delay" in data.json
-if not media: herojs = '<script src="anim.js" defer></script>'
-elif media.endswith((".mp4", ".webm")):
-    herojs = ("<script>var v=document.querySelector('.stage video');"
-              "if(v&&!matchMedia('(prefers-reduced-motion: reduce)').matches)setTimeout(function(){v.play().catch(function(){})}," + str(delay) + ");</script>")
-else: herojs = ""
+delay = int(float(S.get("hero_delay", 2.5)) * 1000)   # seconds before the first video starts ("hero_delay" in data.json)
+bm = S.get("banner_media", "").lstrip("/")
+if bm and not os.path.exists(bm): bm = ""
+banner = ""
+if bm:
+    bp = S.get("banner_poster", "").lstrip("/")
+    pa = f' poster="{e(bp)}"' if bp and os.path.exists(bp) else ""
+    cap = f'<figcaption>{rich(S["banner_caption"])}</figcaption>' if S.get("banner_caption") else ""
+    ctl = " controls" if S.get("hero_controls") else " disablepictureinpicture"
+    banner = (f'<figure class="banner" style="margin:0 0 3rem"><video src="{e(bm)}"{pa} loop muted playsinline{ctl} preload="metadata" '
+              f'style="width:100%;height:auto;display:block;border-radius:14px"></video>{cap}</figure>')
+# Only one video plays at a time: the one most visible on screen, and only after the start delay
+PLAYER = """<script>(function(){
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,ready=false,vis=new Map();
+var vids=[document.querySelector('.stage video'),document.querySelector('.banner video')].filter(Boolean);
+function update(){if(reduce||!ready)return;var best=null,r=0;
+vids.forEach(function(v){var x=vis.get(v)||0;if(x>r){r=x;best=v}});
+vids.forEach(function(v){if(v===best){if(v.paused)v.play().catch(function(){})}else if(!v.paused)v.pause()})}
+var io=new IntersectionObserver(function(es){es.forEach(function(e){vis.set(e.target,e.intersectionRatio>=.3?e.intersectionRatio:0)});update()},{threshold:[0,.3,.5,.75,1]});
+vids.forEach(function(v){io.observe(v)});
+setTimeout(function(){ready=true;update()},DELAY);
+})();</script>"""
+herojs = '<script src="anim.js" defer></script>' if not media else ""
+if media.endswith((".mp4", ".webm")) or bm: herojs += PLAYER.replace("DELAY", str(delay))
 person = json.dumps({"@context": "https://schema.org", "@type": "Person", "name": S["name"], "jobTitle": S["role"], "url": URL + "/",
                      "email": S["email"], "sameAs": [l["url"] for l in S["links"]]})
 page("index.html", "Home", S["description"], f'''<section class="hero"><div><h1>{e(S["name"])}</h1><p class="role">{role_html}</p>
 <p>{rich(S["intro"])}</p><p class="links">{links(S["links"])}</p></div>{stage}</section>
+{banner}
 {'<section><h2>Figures from my research</h2><div class="figs">' + figs + '</div></section>' if figs else ''}
 {herojs}''', f'<script type="application/ld+json">{person}</script>')
 
