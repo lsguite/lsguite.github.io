@@ -80,3 +80,6 @@ details[open]>summary::before{transform:rotate(45deg)}
 .photo figcaption strong{display:block;color:var(--ink);font-weight:600}
 .photo figcaption span{display:block}
 @media (max-width:640px){.gallery{column-count:1}}
+
+.stage.media{aspect-ratio:auto;background:none}
+.stage.media video,.stage.media img{height:auto;object-fit:contain;border-radius:14px}
