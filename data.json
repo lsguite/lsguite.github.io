@@ -7,7 +7,8 @@
   "description": "Louis-Simon Guité is a PhD researcher in astrophysics at CEA Paris-Saclay. Publications, posters and CV.",
   "intro": "Short introduction coming soon.",
   "photo": "",
-  "hero_media": "",
+  "hero_media": "figures/research-video.mp4",
+  "hero_poster": "figures/research-video-poster.png",
   "cv_pdf": "cv.pdf",
   "links": [
    {
