@@ -11,6 +11,9 @@
   "hero_poster": "figures/research-video-poster.png",
   "hero_controls": false,
   "hero_delay": 1,
+  "banner_media": "figures/sympathetic-flares.mp4",
+  "banner_poster": "figures/sympathetic-flares-poster.jpg",
+  "banner_caption": "Optional caption, with **bold** words if you like.",
   "cv_pdf": "cv.pdf",
   "links": [
    {
