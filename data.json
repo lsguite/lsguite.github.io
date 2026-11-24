@@ -9,6 +9,7 @@
   "photo": "",
   "hero_media": "figures/research-video.mp4",
   "hero_poster": "figures/research-video-poster.png",
+  "hero_controls": false,
   "cv_pdf": "cv.pdf",
   "links": [
    {
