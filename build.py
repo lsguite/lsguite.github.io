@@ -95,7 +95,7 @@ if media and not os.path.exists(media): media = ""   # file not uploaded yet: fa
 poster = S.get("hero_poster", "").lstrip("/")
 if media.endswith((".mp4", ".webm")):
     pa = f' poster="{e(poster)}"' if poster and os.path.exists(poster) else ""
-    stage = f'<div class="stage media"><video src="{e(media)}"{pa} loop muted playsinline controls preload="metadata"></video></div>'
+    stage = f'<div class="stage media"><video src="{e(media)}"{pa} loop muted playsinline{" controls" if S.get("hero_controls") else " disablepictureinpicture"} preload="metadata"></video></div>'
 elif media: stage = f'<div class="stage media"><img src="{e(media)}" alt="{e(S.get("hero_alt", "Illustration of my research"))}"></div>'
 else: stage = '<div class="stage"><canvas id="stage" role="img" aria-label="Animated network of drifting points"></canvas></div>'
 figs = "".join(
