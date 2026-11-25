@@ -84,14 +84,38 @@ def posters(items):
                 + (f'<ul class="badges"><li>{e(p["note"])}</li></ul>' if p.get("note") else "") + "</div></article>")
     return f'<div class="poster-grid">{out}</div>' if out else ""
 
+try:
+    from PIL import Image, ImageOps
+    Image.MAX_IMAGE_PIXELS = None
+except ImportError:
+    Image = None
+
+def photo_info(s):
+    """Return (path to show, width, height). Big photos get a ~1000 px thumbnail in thumbs/ (the click-through keeps the original)."""
+    if not Image: return s, 0, 0
+    try:
+        with Image.open(s) as im:
+            im = ImageOps.exif_transpose(im); w, h = im.size
+            if w <= 1100: return s, w, h
+            t = "thumbs/" + s.replace("/", "_").rsplit(".", 1)[0] + ".jpg"
+            if not os.path.exists(t):
+                os.makedirs("thumbs", exist_ok=True)
+                im.convert("RGB").resize((1000, round(h * 1000 / w)), Image.LANCZOS).save(t, quality=82, optimize=True, progressive=True)
+            return t, 1000, round(h * 1000 / w)
+    except Exception:
+        return s, 0, 0
+
 def photos(items):
     out = ""
     for p in items:
         s = p.get("src", "").lstrip("/")
         if not s or not os.path.exists(s): continue
+        t, w, h = photo_info(s)
         det = f"<span>{e(p['details'])}</span>" if p.get("details") else ""
-        out += (f'<figure class="photo" itemscope itemtype="https://schema.org/ImageObject"><a href="{e(s)}">'
-                f'<img loading="lazy" itemprop="contentUrl" src="{e(s)}" alt="{e(p.get("alt") or p.get("title", ""))}"></a>'
+        ratio = f"aspect-ratio:{w}/{h};" if w and h else ""      # reserves the space so the page doesn't jump while images load
+        load = "eager" if out.count("<figure") < 4 else "lazy"
+        out += (f'<figure class="photo" itemscope itemtype="https://schema.org/ImageObject"><link itemprop="contentUrl" href="{e(s)}"><a href="{e(s)}">'
+                f'<img loading="{load}" decoding="async" src="{e(t)}" style="{ratio}background:var(--line)" alt="{e(p.get("alt") or p.get("title", ""))}"></a>'
                 f'<figcaption><strong itemprop="name">{e(p.get("title", ""))}</strong>{det}</figcaption></figure>')
     return f'<div class="gallery">{out}</div>' if out else ""
 
