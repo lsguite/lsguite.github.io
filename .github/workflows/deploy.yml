@@ -19,8 +19,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install PDF tools (poster previews)
-        run: sudo apt-get update && sudo apt-get install -y poppler-utils
+      - name: Install PDF and image tools (poster previews, photo thumbnails)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils
+          sudo apt-get install -y python3-pil || true
       - name: Build pages from data.json
         run: python3 build.py
       - uses: actions/upload-pages-artifact@v3
