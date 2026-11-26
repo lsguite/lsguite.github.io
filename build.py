@@ -137,17 +137,17 @@ def hl_card(src, alt, cap, href="", title="", meta=""):
     if href: img = f'<a href="{e(href)}">{img}</a>'
     c = f'<span style="display:block;color:var(--ink)">{rich(cap)}</span>' if cap else ""
     s = f'<span style="display:block">From <a href="{e(href)}">{e(title)}</a>, {e(meta)}</span>' if title and href else ""
-    return f"<figure>{img}<figcaption>{c}{s}</figcaption></figure>"
+    return f'<figure style="--r:{(w / h if w and h else 1.5):.3f}">{img}<figcaption>{c}{s}</figcaption></figure>'
 
 # Research highlights: figures listed in "figures" (data.json) if any, otherwise the figure of each first-author paper (max 3)
 cards = [hl_card(f["src"].lstrip("/"), f.get("alt", ""), f.get("caption", ""), f.get("url", "")) for f in D.get("figures", []) if os.path.exists(f.get("src", "").lstrip("/"))]
 if not cards:
     for p in D["publications"]:
         fg = p.get("figure") or {}; src = fg.get("src", "").lstrip("/")
-        if p.get("category") == "First author" and src and os.path.exists(src):
+        if p.get("category") == "First author" and p.get("highlight") is not False and src and os.path.exists(src):
             href = p.get("url") or (f"https://doi.org/{p['doi']}" if p.get("doi") else "")
             cards.append(hl_card(src, fg.get("alt", ""), fg.get("caption", ""), href, p["title"], f'{p.get("venue", "")} {p["year"]}'))
-highlights = ('<section style="margin-bottom:3rem"><h2>Research highlights</h2><div class="figs">' + "".join(cards[:3]) + "</div></section>") if cards else ""
+highlights = ('<section style="margin-bottom:3rem"><h2>Research highlights</h2><div class="figs hl">' + "".join(cards[:3]) + "</div></section>") if cards else ""
 _r = S["role"].rsplit(", ", 1)   # keep the last part (the institution) on one line
 role_html = f'{e(_r[0])}, <span style="white-space:nowrap">{e(_r[1])}</span>' if len(_r) == 2 else e(S["role"])
 delay = int(float(S.get("hero_delay", 2.5)) * 1000)   # seconds before the first video starts ("hero_delay" in data.json)
