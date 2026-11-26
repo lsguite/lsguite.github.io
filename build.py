@@ -106,18 +106,20 @@ def photo_info(s):
         return s, 0, 0
 
 def photos(items):
-    out = ""
+    figs = []
     for p in items:
         s = p.get("src", "").lstrip("/")
         if not s or not os.path.exists(s): continue
         t, w, h = photo_info(s)
         det = f"<span>{e(p['details'])}</span>" if p.get("details") else ""
         ratio = f"aspect-ratio:{w}/{h};" if w and h else ""      # reserves the space so the page doesn't jump while images load
-        load = "eager" if out.count("<figure") < 4 else "lazy"
-        out += (f'<figure class="photo" itemscope itemtype="https://schema.org/ImageObject"><link itemprop="contentUrl" href="{e(s)}"><a href="{e(s)}">'
-                f'<img loading="{load}" decoding="async" src="{e(t)}" style="{ratio}background:var(--line)" alt="{e(p.get("alt") or p.get("title", ""))}"></a>'
-                f'<figcaption><strong itemprop="name">{e(p.get("title", ""))}</strong>{det}</figcaption></figure>')
-    return f'<div class="gallery">{out}</div>' if out else ""
+        load = "eager" if len(figs) < 4 else "lazy"
+        figs.append(f'<figure class="photo" style="order:{len(figs)}" itemscope itemtype="https://schema.org/ImageObject"><link itemprop="contentUrl" href="{e(s)}"><a href="{e(s)}">'
+                    f'<img loading="{load}" decoding="async" src="{e(t)}" style="{ratio}background:var(--line)" alt="{e(p.get("alt") or p.get("title", ""))}"></a>'
+                    f'<figcaption><strong itemprop="name">{e(p.get("title", ""))}</strong>{det}</figcaption></figure>')
+    if not figs: return ""
+    # entries alternate left, right, left, right... (1st left, 2nd right, 3rd left under the 1st, ...)
+    return '<div class="gallery"><div class="gcol">' + "".join(figs[0::2]) + '</div><div class="gcol">' + "".join(figs[1::2]) + '</div></div>'
 
 # Home
 media = S.get("hero_media", "").lstrip("/")
