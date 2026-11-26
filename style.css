@@ -73,13 +73,14 @@ details[open]>summary::before{transform:rotate(45deg)}
 .poster .thumb img{width:100%;height:100%;object-fit:contain;display:block;border-radius:8px}
 @media (max-width:760px){.poster-grid{grid-template-columns:1fr}}
 
-.gallery{column-count:2;column-gap:1.5rem}
 .photo{break-inside:avoid;margin:0 0 1.5rem}
 .photo img{width:100%;height:auto;display:block;border-radius:8px;aspect-ratio:auto;object-fit:initial}
 .photo figcaption{margin-top:.5rem;font-size:.9rem;color:var(--muted)}
 .photo figcaption strong{display:block;color:var(--ink);font-weight:600}
 .photo figcaption span{display:block}
-@media (max-width:640px){.gallery{column-count:1}}
+.gallery{display:flex;gap:1.5rem;align-items:flex-start}
+.gcol{flex:1;min-width:0}
+@media (max-width:640px){.gallery{flex-direction:column;gap:0;align-items:stretch}.gcol{display:contents}}
 
 .stage.media{aspect-ratio:auto;background:none}
 .stage.media video,.stage.media img{height:auto;object-fit:contain;border-radius:14px}
