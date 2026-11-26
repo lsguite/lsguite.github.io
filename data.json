@@ -62,7 +62,7 @@
    "venue": "Solar Physics",
    "doi": "10.1007/s11207-025-02501-4",
    "highlights": [],
-   "highlight": false,
+   "highlight": "",
    "links": [],
    "summary": "We modeled sympathetic solar flares using a coupled two-lattice self-organized critical avalanche framework to represent interacting active regions, finding that stronger coupling increases short waiting times and energy synchronization. Comparing the model's waiting-time statistics with solar observations indicates that any magnetic coupling driving sympathetic flares between active regions is likely relatively weak.",
    "figure": {
