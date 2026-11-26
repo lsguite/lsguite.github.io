@@ -203,7 +203,9 @@ page("cv.html", "CV", f'Curriculum vitae of {S["name"]}: education, experience a
      f'<h1 class="page-title">CV</h1>' + (f'<a class="btn" href="{e(S["cv_pdf"])}">Download CV (PDF)</a>' if os.path.exists(S["cv_pdf"]) else "") + (cv or "<p>Coming soon.</p>"))
 
 page("astrophotography.html", "Astrophotography", f'Astrophotography by {S["name"]}.',
-     '<h1 class="page-title">Astrophotography</h1>' + (photos(D.get("photos", [])) or "<p>Coming soon.</p>"))
+     '<h1 class="page-title">Astrophotography</h1>' + (
+         (f'<p style="margin:-1rem 0 2rem;max-width:42rem">{rich(S["photos_intro"])}</p>' if S.get("photos_intro") else "") + gal
+         if (gal := photos(D.get("photos", []))) else "<p>Coming soon.</p>"))
 
 open("sitemap.xml", "w").write('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' +
     "".join(f'<url><loc>{URL}{"/" if f=="index.html" else "/"+f}</loc><lastmod>{date.today()}</lastmod></url>' for _, f in PAGES) + "</urlset>")
