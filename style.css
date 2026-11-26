@@ -85,3 +85,7 @@ details[open]>summary::before{transform:rotate(45deg)}
 
 .stage.media{aspect-ratio:auto;background:none}
 .stage.media video,.stage.media img{height:auto;object-fit:contain;border-radius:14px}
+
+.hl{display:flex;gap:1.5rem}
+.hl figure{flex:var(--r) 1 0;min-width:0}
+@media (max-width:640px){.hl{flex-direction:column}.hl figure{flex:none}}
