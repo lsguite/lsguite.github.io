@@ -137,7 +137,7 @@ def hl_card(src, alt, cap, href="", title="", meta=""):
     if href: img = f'<a href="{e(href)}">{img}</a>'
     c = f'<span style="display:block;color:var(--ink)">{rich(cap)}</span>' if cap else ""
     s = f'<span style="display:block">From <a href="{e(href)}">{e(title)}</a>, {e(meta)}</span>' if title and href else ""
-    return f'<figure style="--r:{(w / h if w and h else 1.5):.3f}">{img}<figcaption>{c}{s}</figcaption></figure>'
+    return f"<figure>{img}<figcaption>{c}{s}</figcaption></figure>", (w / h if w and h else 1.5)
 
 # Research highlights: figures listed in "figures" (data.json) if any, otherwise the figure of each first-author paper (max 3)
 cards = [hl_card(f["src"].lstrip("/"), f.get("alt", ""), f.get("caption", ""), f.get("url", "")) for f in D.get("figures", []) if os.path.exists(f.get("src", "").lstrip("/"))]
@@ -147,7 +147,17 @@ if not cards:
         if p.get("category") == "First author" and p.get("highlight") is not False and src and os.path.exists(src):
             href = p.get("url") or (f"https://doi.org/{p['doi']}" if p.get("doi") else "")
             cards.append(hl_card(src, fg.get("alt", ""), fg.get("caption", ""), href, p["title"], f'{p.get("venue", "")} {p["year"]}'))
-highlights = ('<section style="margin-bottom:3rem"><h2>Research highlights</h2><div class="figs hl">' + "".join(cards[:3]) + "</div></section>") if cards else ""
+# Layout: 1st figure on the left, the next two stacked on the right; the left column's width is set so both columns end up about equally tall
+cs = cards[:3]; highlights = ""
+if cs:
+    side = cs[1:]
+    a = min(1.6, max(0.9, cs[0][1] * sum(1 / r for _, r in side))) if side else 1
+    col = "display:flex;flex-direction:column;gap:1.5rem;min-width:0"
+    left = f'<div style="{col};flex:{a:.3f} 1 320px">{cs[0][0]}</div>'
+    sidehtml = "".join(h for h, _ in side)
+    right = f'<div style="{col};flex:1 1 320px">{sidehtml}</div>' if side else ""
+    highlights = ('<section style="margin-bottom:3rem"><h2>Research highlights</h2>'
+                  f'<div style="display:flex;flex-wrap:wrap;gap:1.5rem;align-items:flex-start">{left}{right}</div></section>')
 _r = S["role"].rsplit(", ", 1)   # keep the last part (the institution) on one line
 role_html = f'{e(_r[0])}, <span style="white-space:nowrap">{e(_r[1])}</span>' if len(_r) == 2 else e(S["role"])
 delay = int(float(S.get("hero_delay", 2.5)) * 1000)   # seconds before the first video starts ("hero_delay" in data.json)
