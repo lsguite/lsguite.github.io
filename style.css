@@ -69,9 +69,10 @@ details[open]>summary::before{transform:rotate(45deg)}
 .poster{display:flex;flex-direction:column;gap:.75rem;padding:1.25rem;border:1px solid var(--line);border-radius:12px}
 .poster h3 a{color:var(--ink);text-decoration-thickness:1px;text-underline-offset:3px}.poster h3 a:hover{color:var(--accent)}
 .poster p{margin:.25rem 0;color:var(--muted)}.poster .auth{color:var(--ink)}
-.poster .thumb{order:2;margin-top:auto;height:320px;display:block;border-radius:8px;background:color-mix(in srgb,var(--line) 45%,transparent)}
-.poster .thumb img{width:100%;height:100%;object-fit:contain;display:block;border-radius:8px}
+.poster .thumb{order:2;margin-top:auto;display:block;align-self:flex-start;max-width:100%}
+.poster .thumb img{width:auto;height:auto;max-width:100%;max-height:420px;display:block;border:1px solid var(--line);border-radius:6px}
 @media (max-width:760px){.poster-grid{grid-template-columns:1fr}}
+
 
 .photo{break-inside:avoid;margin:0 0 1.5rem}
 .photo img{width:100%;height:auto;display:block;border-radius:8px;aspect-ratio:auto;object-fit:initial}
