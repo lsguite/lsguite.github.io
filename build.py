@@ -130,9 +130,24 @@ if media.endswith((".mp4", ".webm")):
     stage = f'<div class="stage media"><video src="{e(media)}"{pa} loop muted playsinline{" controls" if S.get("hero_controls") else " disablepictureinpicture"} preload="metadata"></video></div>'
 elif media: stage = f'<div class="stage media"><img src="{e(media)}" alt="{e(S.get("hero_alt", "Illustration of my research"))}"></div>'
 else: stage = '<div class="stage"><canvas id="stage" role="img" aria-label="Animated network of drifting points"></canvas></div>'
-figs = "".join(
-    f'<figure>{"<img loading=lazy src=%s alt=%s>" % (chr(34)+e(f["src"])+chr(34), chr(34)+e(f["alt"])+chr(34)) if os.path.exists(f["src"]) else "<div class=ph>" + e(f["src"]) + "</div>"}'
-    f'<figcaption>{e(f["caption"])}</figcaption></figure>' for f in D["figures"])
+def hl_card(src, alt, cap, href="", title="", meta=""):
+    t, w, h = photo_info(src)
+    ratio = f"aspect-ratio:{w}/{h};" if w and h else "aspect-ratio:auto;"
+    img = f'<img loading="lazy" decoding="async" src="{e(t)}" alt="{e(alt)}" style="{ratio}object-fit:contain;background:var(--line)">'
+    if href: img = f'<a href="{e(href)}">{img}</a>'
+    c = f'<span style="display:block;color:var(--ink)">{rich(cap)}</span>' if cap else ""
+    s = f'<span style="display:block">From <a href="{e(href)}">{e(title)}</a>, {e(meta)}</span>' if title and href else ""
+    return f"<figure>{img}<figcaption>{c}{s}</figcaption></figure>"
+
+# Research highlights: figures listed in "figures" (data.json) if any, otherwise the figure of each first-author paper (max 3)
+cards = [hl_card(f["src"].lstrip("/"), f.get("alt", ""), f.get("caption", ""), f.get("url", "")) for f in D.get("figures", []) if os.path.exists(f.get("src", "").lstrip("/"))]
+if not cards:
+    for p in D["publications"]:
+        fg = p.get("figure") or {}; src = fg.get("src", "").lstrip("/")
+        if p.get("category") == "First author" and src and os.path.exists(src):
+            href = p.get("url") or (f"https://doi.org/{p['doi']}" if p.get("doi") else "")
+            cards.append(hl_card(src, fg.get("alt", ""), fg.get("caption", ""), href, p["title"], f'{p.get("venue", "")} {p["year"]}'))
+highlights = ('<section style="margin-bottom:3rem"><h2>Research highlights</h2><div class="figs">' + "".join(cards[:3]) + "</div></section>") if cards else ""
 _r = S["role"].rsplit(", ", 1)   # keep the last part (the institution) on one line
 role_html = f'{e(_r[0])}, <span style="white-space:nowrap">{e(_r[1])}</span>' if len(_r) == 2 else e(S["role"])
 delay = int(float(S.get("hero_delay", 2.5)) * 1000)   # seconds before the first video starts ("hero_delay" in data.json)
@@ -163,8 +178,8 @@ person = json.dumps({"@context": "https://schema.org", "@type": "Person", "name"
                      "email": S["email"], "sameAs": [l["url"] for l in S["links"]]})
 page("index.html", "Home", S["description"], f'''<section class="hero"><div><h1>{e(S["name"])}</h1><p class="role">{role_html}</p>
 <p>{rich(S["intro"])}</p><p class="links">{links(S["links"])}</p></div>{stage}</section>
+{highlights}
 {banner}
-{'<section><h2>Figures from my research</h2><div class="figs">' + figs + '</div></section>' if figs else ''}
 {herojs}''', f'<script type="application/ld+json">{person}</script>')
 
 page("publications.html", "Publications", f'Peer-reviewed papers and preprints by {S["name"]}.',
